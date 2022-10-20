@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - rabbitmq_go_net
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  postgres:
+    image: postgres:13.7
+    hostname: postgres
+    container_name: 'postgres'
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    networks:
+      - postgres_go_net
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  pgadmin:
+    container_name: 'pgadmin'
+    image: dpage/pgadmin4:5.7
+    env_file:
+      - .env
+    ports:
+      - 5050:80
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres_go_net
+  producer:
+    container_name: 'producer'
+    image: producer:1.0
+    build: .
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+    ports:
+      - 8080:8080
+    networks:
+      - rabbitmq_go_net
+  consumer:
+    container_name: 'consumer'
+    image: consumer:1.0
+    build: .
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    networks:
+      - rabbitmq_go_net
+      - postgres_go_net
+networks:
+  rabbitmq_go_net:
+    driver: bridge
+  postgres_go_net:
+    driver: bridge
