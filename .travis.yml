@@ -3,3 +3,12 @@ language: java
 #we add the java development kit (jdk)
 jdk:
 - openjdk11
+addons:
+  sonarcloud:
+    organization: "ecabs"
+    token:
+      secure: "1426cfb1b48c899a708f7a352aef313680f4f371" # encrypted value of your token
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
