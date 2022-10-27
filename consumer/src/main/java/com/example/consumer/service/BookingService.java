@@ -3,7 +3,9 @@ package com.example.consumer.service;
 import java.io.IOException;
 
 public interface BookingService {
-    String createBooking(String message) throws IOException;
-    String updateBooking(String message) throws IOException;
-    void deleteBooking(String message) throws IOException;
+    String create(String message) throws IOException;
+    String update(String message) throws IOException;
+    void delete(String message) throws IOException;
+    String getAll() throws IOException;
+    String getById(String message) throws IOException;
 }

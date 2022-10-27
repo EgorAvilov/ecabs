@@ -4,20 +4,14 @@ import com.example.producer.dto.BookingDto;
 import com.example.producer.mapper.BookingMapper;
 import com.example.producer.utils.Constants;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Log4j2
@@ -50,5 +44,15 @@ public class BookingController {
     public void delete(@PathVariable Long id) throws IOException {
         template.setExchange(Constants.MESSAGE_EXCHANGE);
         template.convertAndSend(Constants.DELETE_BOOKING_KEY, mapper.toJSON(id));
+    }
+    @GetMapping
+    public ResponseEntity getAll(){
+        template.setExchange(Constants.MESSAGE_EXCHANGE);
+        return new ResponseEntity<>(template.receive(Constants.GET_ALL_BOOKINGS_KEY), HttpStatus.OK);
+    }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity getById(@PathVariable Long id) throws IOException {
+        template.setExchange(Constants.MESSAGE_EXCHANGE);
+        return new ResponseEntity<>(template.convertSendAndReceive(Constants.GET_BY_ID_BOOKING_KEY, mapper.toJSON(id)), HttpStatus.OK);
     }
 }

@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public String createBooking(String message) throws IOException {
+    public String create(String message) throws IOException {
         Booking booking = bookingMapper.toJavaObject(message);
         booking.setCreatedOn(LocalDateTime.now());
         booking.setLastModifiedOn(LocalDateTime.now());
@@ -38,7 +38,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public String updateBooking(String message) throws IOException {
+    public String update(String message) throws IOException {
         Booking booking = bookingMapper.toJavaObject(message);
         Booking persistBooking=bookingRepository.getById(booking.getId());
         bookingMapperInterface.updateBooking(booking, persistBooking);
@@ -50,10 +50,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void deleteBooking(String message) throws IOException {
+    public void delete(String message) throws IOException {
         Long bookingId=bookingMapper.toLong(message);
         if (bookingRepository.existsById(bookingId)) {
             bookingRepository.deleteById(bookingId);
         }
+    }
+
+    @Override
+    public String getAll() throws IOException {
+        return null;
+    }
+
+    @Override
+    public String getById(String message) throws IOException {
+        return null;
     }
 }

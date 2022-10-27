@@ -1,8 +1,6 @@
-package com.example.consumer.listener;
+package com.example.consumer.config;
 
 import com.example.consumer.service.BookingService;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -19,7 +17,6 @@ import static com.example.consumer.utils.Constants.*;
 @Log4j2
 public class RabbitMqListener {
 
-    Logger logger = Logger.getLogger(RabbitMqListener.class);
     private final BookingService bookingService;
     @Autowired
     public RabbitMqListener(BookingService bookingService) {
@@ -28,19 +25,29 @@ public class RabbitMqListener {
 
     @RabbitListener(queues = BOOKING_CREATE_QUEUE_NAME)
     public String processQueueCreateBooking(String message) throws IOException {
-       return bookingService.createBooking(message);
+       return bookingService.create(message);
     }
     @RabbitListener(queues = BOOKING_DELETE_QUEUE_NAME)
     public void processQueueDeleteBooking(String message) throws IOException {
-        bookingService.deleteBooking(message);
+        bookingService.delete(message);
     }
     @RabbitListener(queues = BOOKING_UPDATE_QUEUE_NAME)
     public String processQueueUpdateBooking(String message) throws IOException {
-       return bookingService.updateBooking(message);
+       return bookingService.update(message);
+    }
+
+    @RabbitListener(queues = BOOKING_UPDATE_QUEUE_NAME)
+    public String processQueueGetAllBookings() throws IOException {
+        return bookingService.getAll();
+    }
+
+    @RabbitListener(queues = BOOKING_UPDATE_QUEUE_NAME)
+    public String processQueueGetByIdBooking(String message) throws IOException {
+        return bookingService.getById(message);
     }
 
     @RabbitListener(queues = MESSAGE_AUDIT_QUEUE_NAME)
     public void processQueueMESSAGE_AUDIT_QUEUE_NAME(String message) {
-        logger.info("Received from queue " + MESSAGE_AUDIT_QUEUE_NAME + " : " + message);
+        System.out.println("Received from queue " + MESSAGE_AUDIT_QUEUE_NAME + " : " + message);
     }
 }
