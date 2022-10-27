@@ -96,42 +96,42 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding BookingExchangeToMessageExchange() {
+    public Binding bookingExchangeToMessageExchange() {
         return bind(bookingExchange()).to(messageExchange());
     }
 
     @Bean
-    public Binding BookingCreateQueueToBookingExchange() {
+    public Binding bookingCreateQueueToBookingExchange() {
         return bind(bookingCreateQueue()).to(bookingExchange())
                 .with(Constants.CREATE_BOOKING_KEY);
     }
 
     @Bean
-    public Binding BookingUpdateQueueToBookingExchange() {
+    public Binding bookingUpdateQueueToBookingExchange() {
         return bind(bookingUpdateQueue()).to(bookingExchange())
                 .with(Constants.UPDATE_BOOKING_KEY);
     }
 
     @Bean
-    public Binding BookingDeleteQueueToBookingExchange() {
+    public Binding bookingDeleteQueueToBookingExchange() {
         return bind(bookingDeleteQueue()).to(bookingExchange())
                 .with(Constants.DELETE_BOOKING_KEY);
     }
 
     @Bean
-    public Binding BookingGetAllQueueToBookingExchange() {
+    public Binding bookingGetAllQueueToBookingExchange() {
         return bind(bookingGetAllQueue()).to(bookingExchange())
                 .with(Constants.GET_ALL_BOOKINGS_KEY);
     }
 
     @Bean
-    public Binding BookingGetByIdQueueToBookingExchange() {
+    public Binding bookingGetByIdQueueToBookingExchange() {
         return bind(bookingGetByIdQueue()).to(bookingExchange())
                 .with(Constants.GET_BY_ID_BOOKING_KEY);
     }
 
     @Bean
-    public Binding MessageAuditQueueToMessageExchange() {
+    public Binding messageAuditQueueToMessageExchange() {
         return bind(messageAuditQueue()).to(messageExchange());
     }
 }

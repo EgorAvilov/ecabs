@@ -2,7 +2,6 @@ package com.example.consumer.config;
 
 import com.example.consumer.service.BookingService;
 import lombok.extern.log4j.Log4j2;
-import org.apache.log4j.Logger;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ public class RabbitMqListener {
     }
 
     @RabbitListener(queues = MESSAGE_AUDIT_QUEUE_NAME)
-    public void processQueueMESSAGE_AUDIT_QUEUE_NAME(String message) {
+    public void processQueueMessageAudit(String message) {
         System.out.println("Received from queue " + MESSAGE_AUDIT_QUEUE_NAME + " : " + message);
     }
 }
