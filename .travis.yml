@@ -12,7 +12,8 @@ addons:
       secure: "$SONAR_TOKEN" # encrypted value of your token
 before_install:
  - docker login --username Kyrsor --password d05b79e8-d00f-4c44-a000-76797f3c71c1 registry.heroku.com
- - chmod a+rwx ./mvnw
+ - chmod +x ./mvnw
+ - chmod +x mvnw
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - cd producer
