@@ -1,7 +1,10 @@
 #we use java
 language: java
 #we add the java development kit (jdk)
-
+deploy:
+  provider: heroku
+  api_key:
+    secure: "YOUR ENCRYPTED API KEY"
 services:
 #Linking Travis CI and Docker
 - docker
@@ -11,14 +14,12 @@ addons:
     token:
       secure: "$SONAR_TOKEN" # encrypted value of your token
 before_install:
- - docker login --username Kyrsor --password d05b79e8-d00f-4c44-a000-76797f3c71c1 registry.heroku.com
- - chmod +x ./mvnw
- - chmod +x mvnw
+ - docker login --username=egoravilov99@gmail.com --password=d05b79e8-d00f-4c44-a000-76797f3c71c1 registry.heroku.com
  - chmod +x producer/mvnw
+ - chmod +x consumer/mvnw
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - cd producer
-  - docker build -f Dockerfile -t producer:1.0 .
+  # the following commandd- cd producer
+  - docker build -f  etc/services/producer/Dockerfile -t producer:1.0 .
   - docker build -t registry.heroku.com/producer-ecabs/web .
   - docker push registry.heroku.com/producer-ecabs/web
   - heroku container:release web -a producer-ecabs
