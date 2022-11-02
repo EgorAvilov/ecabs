@@ -14,7 +14,7 @@ addons:
     token:
       secure: "$SONAR_TOKEN" # encrypted value of your token
 before_install:
- - docker login --username=egoravilov99@gmail.com --password=d05b79e8-d00f-4c44-a000-76797f3c71c1 registry.heroku.com
+ - docker login --username=egoravilov99@gmail.com --password=$(heroku auth:token) registry.heroku.com
  - chmod +x producer/mvnw
  - chmod +x consumer/mvnw
 script:
