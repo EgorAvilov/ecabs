@@ -1,4 +1,5 @@
 FROM adoptopenjdk/openjdk11:jdk-11.0.2.9-alpine
+USER root
 EXPOSE ${PRODUCER_SERVER_PORT}
 WORKDIR /producer
 
