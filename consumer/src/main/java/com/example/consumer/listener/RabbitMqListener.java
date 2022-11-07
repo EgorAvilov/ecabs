@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static com.example.consumer.utils.Constants.*;
 
-@EnableRabbit
+
 @Component
 @Log4j2
 public class RabbitMqListener {
