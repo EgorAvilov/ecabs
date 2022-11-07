@@ -16,10 +16,8 @@ public class RabbitConfig {
     @Bean
     public ConnectionFactory connectionFactory()
     {
-
         String uri = System.getenv("CLOUDAMQP_URL");
-        //String uri = "amqps://otkktcxr:09_S2G3MA99uJ60H_B6hu2OODLj1JMY-@stingray.rmq.cloudamqp.com/otkktcxr";
-        if (uri == null) //значит мы запущены локально и нужно подключаться к локальному rabbitmq
+        if (uri == null)
             return new CachingConnectionFactory(CONNECTION_NAME);
         URI url = null;
         try

@@ -35,16 +35,6 @@ public class RabbitMqListener {
        return bookingService.update(message);
     }
 
-    @RabbitListener(queues = BOOKING_UPDATE_QUEUE_NAME)
-    public String processQueueGetAllBookings() throws IOException {
-        return bookingService.getAll();
-    }
-
-    @RabbitListener(queues = BOOKING_UPDATE_QUEUE_NAME)
-    public String processQueueGetByIdBooking(String message) throws IOException {
-        return bookingService.getById(message);
-    }
-
     @RabbitListener(queues = MESSAGE_AUDIT_QUEUE_NAME)
     public void processQueueMessageAudit(String message) {
         System.out.println("Received from queue " + MESSAGE_AUDIT_QUEUE_NAME + " : " + message);

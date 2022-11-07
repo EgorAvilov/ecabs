@@ -56,14 +56,4 @@ public class BookingServiceImpl implements BookingService {
             bookingRepository.deleteById(bookingId);
         }
     }
-
-    @Override
-    public String getAll() throws IOException {
-        return null;
-    }
-
-    @Override
-    public String getById(String message) throws IOException {
-        return null;
-    }
 }

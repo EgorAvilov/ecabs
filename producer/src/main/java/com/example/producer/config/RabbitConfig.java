@@ -21,10 +21,8 @@ public class RabbitConfig {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        //получаем адрес AMQP у провайдера
         String uri = System.getenv("CLOUDAMQP_URL");
-        //String uri = "amqps://otkktcxr:09_S2G3MA99uJ60H_B6hu2OODLj1JMY-@stingray.rmq.cloudamqp.com/otkktcxr";
-        if (uri == null) //значит мы запущены локально и нужно подключаться к локальному rabbitmq
+        if (uri == null)
             return new CachingConnectionFactory(CONNECTION_NAME);
         URI url = null;
         try {
@@ -71,16 +69,6 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue bookingGetAllQueue() {
-        return new Queue(Constants.BOOKING_GET_ALL_QUEUE_NAME);
-    }
-
-    @Bean
-    public Queue bookingGetByIdQueue() {
-        return new Queue(Constants.BOOKING_GET_BY_ID_QUEUE_NAME);
-    }
-
-    @Bean
     public Queue messageAuditQueue() {
         return new Queue(Constants.MESSAGE_AUDIT_QUEUE_NAME);
     }
@@ -116,18 +104,6 @@ public class RabbitConfig {
     public Binding bookingDeleteQueueToBookingExchange() {
         return bind(bookingDeleteQueue()).to(bookingExchange())
                 .with(Constants.DELETE_BOOKING_KEY);
-    }
-
-    @Bean
-    public Binding bookingGetAllQueueToBookingExchange() {
-        return bind(bookingGetAllQueue()).to(bookingExchange())
-                .with(Constants.GET_ALL_BOOKINGS_KEY);
-    }
-
-    @Bean
-    public Binding bookingGetByIdQueueToBookingExchange() {
-        return bind(bookingGetByIdQueue()).to(bookingExchange())
-                .with(Constants.GET_BY_ID_BOOKING_KEY);
     }
 
     @Bean

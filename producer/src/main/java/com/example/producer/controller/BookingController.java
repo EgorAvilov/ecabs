@@ -45,14 +45,4 @@ public class BookingController {
         template.setExchange(Constants.MESSAGE_EXCHANGE);
         template.convertAndSend(Constants.DELETE_BOOKING_KEY, mapper.toJSON(id));
     }
-    @GetMapping
-    public ResponseEntity getAll(){
-        template.setExchange(Constants.MESSAGE_EXCHANGE);
-        return new ResponseEntity<>(template.receive(Constants.GET_ALL_BOOKINGS_KEY), HttpStatus.OK);
-    }
-    @GetMapping(value = "/{id}")
-    public ResponseEntity getById(@PathVariable Long id) throws IOException {
-        template.setExchange(Constants.MESSAGE_EXCHANGE);
-        return new ResponseEntity<>(template.convertSendAndReceive(Constants.GET_BY_ID_BOOKING_KEY, mapper.toJSON(id)), HttpStatus.OK);
-    }
 }

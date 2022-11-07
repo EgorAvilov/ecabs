@@ -12,9 +12,6 @@ import java.net.URISyntaxException;
 @Configuration
 public class DataBaseConfig {
 
-    private static final String CONNECTION_NAME = "jdbc:postgresql://localhost:5432/ecabs";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
     @Bean
     DataSource dataSource() {
         String uri = System.getenv("DATABASE_URL");

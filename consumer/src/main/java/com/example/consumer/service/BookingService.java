@@ -6,6 +6,4 @@ public interface BookingService {
     String create(String message) throws IOException;
     String update(String message) throws IOException;
     void delete(String message) throws IOException;
-    String getAll() throws IOException;
-    String getById(String message) throws IOException;
 }
