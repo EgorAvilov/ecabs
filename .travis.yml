@@ -18,13 +18,12 @@ before_install:
  - chmod 777 ./mvnw
 script:
   # the following commandd- cd producer
-  - docker build -f  etc/services/producer/Dockerfile -t producer:1.0 .
-  - docker build -t registry.heroku.com/producer-ecabs/web .
+  - cd producer
+  - docker build -f  etc/services/producer/Dockerfile -t  registry.heroku.com/producer-ecabs/web .
   - docker push registry.heroku.com/producer-ecabs/web
   - heroku container:release web -a producer-ecabs
   - cd ..
   - cd consumer
-  - docker build -f Dockerfile -t consumer:1.0 .
-  - docker build -t registry.heroku.com/consumer-ecabs/web .
+  - docker build -f  etc/services/consumer/Dockerfile -t registry.heroku.com/consumer-ecabs/web .
   - docker push registry.heroku.com/consumer-ecabs/web
   - heroku container:release web -a consumer-ecabs
